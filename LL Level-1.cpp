@@ -160,5 +160,26 @@ Node* insertNode(Node* head , int i, int data){
     return head;
 }
 //**************************************************************************************************************************************************
+/* You have been given a linked list of integers. Your task is to write a function that deletes a node from a given position, 'pos'. */
 
-
+Node *deleteNode(Node *head, int pos)
+{
+    if(pos==0){
+        return head->next;
+    }
+    
+    int count=0;
+    Node* temp = head;
+    while(temp!=NULL && count<pos-1){
+        count++;
+        temp=temp->next;
+    }
+    if(temp!=NULL && temp->next!=NULL ){     //Since we are using pointer to point to temp->next->next , we have to check whether temp->next = NULL or not
+        Node* a=temp->next;
+        Node* b=a->next;
+        temp->next = b;
+        delete a;
+    }
+    return head;
+}
+//****************************************************************************************************************************************************
