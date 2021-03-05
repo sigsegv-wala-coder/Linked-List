@@ -93,4 +93,41 @@ Node* takeInput(){
     }
     return head;
 }
+**********************************************************************************************************************************************************
+// Find iteratively length of a linked list
+// The basic skeleton to Node class and takeInput is same as above. So just mentioning the length function.
+int length(Node *head)
+{
+    Node* temp =head;         // It's always a good practice to create a temporary variable while iterating through linked list as
+    int count=0;              // if we iterate through head then we can't use head other time as head = NULL after final iteration.
+    while(temp!=NULL){        // Since we have head means the address of first Node, we'll search if it's NULL. If yes then return whatever
+        count++;              // is the count. If not then point the head to the next Node.
+        temp=temp->next;
+    }
+    return count;
+}
+************************************************************************************************************************************************************
+/* For a given a singly linked list of integers and a position 'i', print the node data at the 'i-th' position. */
+
+void printIthNode(Node *head, int i)
+{
+    Node *temp=head;
+    
+    int count=0;
+    
+    while(temp!=NULL){                    // It's important to check for NULL. Consider the case where linked list is 20 -1 and the position is 3
+        if(count==i){                     // then we have to check only till head equals NULL. 
+            cout<<temp->data<<endl;
+            return;
+        }
+        else{
+            count++;
+            temp=temp->next;
+        }
+    }  
+}
+************************************************************************************************************************************************************
+
+
+
 
