@@ -106,6 +106,16 @@ int length(Node *head)
     }
     return count;
 }
+
+// Recursively
+
+int length(Node *head) {
+    if(head==NULL){
+        return 0;
+    }
+    return 1+length(head->next);
+}
+
 //************************************************************************************************************************************************************
 /* For a given a singly linked list of integers and a position 'i', print the node data at the 'i-th' position. */
 
