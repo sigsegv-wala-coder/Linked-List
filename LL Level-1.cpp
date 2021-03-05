@@ -1,4 +1,4 @@
-*********************************************************************************************************************************************************
+//*********************************************************************************************************************************************************
 
 /* Create a Linked list
 Take Input function
@@ -93,7 +93,7 @@ Node* takeInput(){
     }
     return head;
 }
-**********************************************************************************************************************************************************
+//**********************************************************************************************************************************************************
 // Find iteratively length of a linked list
 // The basic skeleton to Node class and takeInput is same as above. So just mentioning the length function.
 int length(Node *head)
@@ -106,7 +106,7 @@ int length(Node *head)
     }
     return count;
 }
-************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 /* For a given a singly linked list of integers and a position 'i', print the node data at the 'i-th' position. */
 
 void printIthNode(Node *head, int i)
@@ -126,8 +126,39 @@ void printIthNode(Node *head, int i)
         }
     }  
 }
-************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+/* Insert a node at ith position */
 
+Node* insertNode(Node* head , int i, int data){
+    
+    /* First thing to do is to create a new node that consists of the given data
+    Now we have to connect the (i-1)th position node to new Node and new Node to ith position node 
+    Dry run to understand better */
 
+    Node *newNode =new Node(data);
+    int count=0;
+    Node* temp = head;
+
+    if(i==0){                        // When have to make a separate case if want to insert at position zero.
+        newNode->next = head;        //   and that will ultimately change the head also. That's why we have to update the head
+        head = newNode;              //   and return the new head. That's why change the return type to Node* .
+        return head;
+    }
+
+    while(temp!=NULL && count < i-1){       // We also have to add constraint temp!=NULL. Consider inserting a data at ith position
+        count++;                            // where i exceeds the length of Linkedlist. Then it will give seisegv error. That's why we
+        temp=temp->next;                    // have to keep a check over temp!=NULL or not. 
+    }
+    if(temp!=NULL){
+        newNode -> next = temp->next;      // Connect ith node to the new node
+        temp->next = newNode;              // Connect (i-1)th node to the new node.
+    }
+    /*OR
+    Node* a=temp->next;
+    temp->next = newNode;
+    newNode->next = a; */
+    return head;
+}
+//**************************************************************************************************************************************************
 
 
