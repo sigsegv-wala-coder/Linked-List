@@ -169,6 +169,25 @@ Node* insertNode(Node* head , int i, int data){
     newNode->next = a; */
     return head;
 }
+
+// Recursively
+
+Node* insertNode(Node *head, int i, int data) {
+	
+    if(head==NULL){
+        return head;
+    }
+    if(i==0){
+        Node* newNode =new Node(data);
+        newNode->next=head;
+        head=newNode;
+        return head;
+    }
+    Node* a=insertNode(head->next , i-1 , data);
+    head->next = a;
+    return head;
+}
+
 //**************************************************************************************************************************************************
 /* You have been given a linked list of integers. Your task is to write a function that deletes a node from a given position, 'pos'. */
 
@@ -190,6 +209,23 @@ Node *deleteNode(Node *head, int pos)
         temp->next = b;
         delete a;
     }
+    return head;
+}
+
+// Recursively
+
+Node *deleteNodeRec(Node *head, int pos) {
+	if(head==NULL){
+        return head;
+    }
+    if(pos==0){
+        Node *a=head;
+        head=head->next;
+        delete a;
+        return head;
+    }
+    Node* b=deleteNodeRec(head->next , pos-1);
+    head->next=b;
     return head;
 }
 //****************************************************************************************************************************************************
