@@ -80,3 +80,63 @@ int main()
 	return 0;
 }
 //****************************************************************************************************************************************************
+/* REVERSE a Linked list Recursively */
+
+/* The base case is if the linked list contain 0 or 1 element, then simply return
+   Now call the recursive function and assume it will reverse the remaining list
+   We'll save the head of the remaining linked list in smallans Node. Now find the
+   last Node of the smallans linked list and connect that node to our head. Also, 
+   head->next = NULL . Because initially our head ka next is the next element of original 
+   linked list. 1 2 3 4 5 is Linked list, then after calling the recursive step, it will
+   return 1 5 4 3 2 . So, we have to connect the last element i.e. 2 to our head i.e. 1 and
+   head->next = NULL. */
+
+Node *reverseLinkedListRec(Node *head)
+{
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node* smallans=reverseLinkedListRec(head->next);
+    Node* temp=smallans;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=head;
+    head->next=NULL;
+    return smallans;
+}
+
+/* The complexity of the above code is O(n^2). 
+   Here is another recursive approach */
+
+// Here we will create a pair class which consists of both head and tail such that
+// we can't traverse the whole linked list to find the tail and then attach head to its next.
+
+class inter {
+  public : 
+    
+    Node* head;
+    Node* tail;
+    
+};
+
+inter reverseLL(Node* head){
+    if(head==NULL || head->next==NULL){
+        inter ans;
+        ans.head=head;
+        ans.tail=head;
+        return ans;
+    }
+    inter smallAns=reverseLL(head->next);
+    smallAns.tail->next=head;
+    head->next=NULL;
+    inter ans;
+    ans.head=smallAns.head;
+    ans.tail=head;
+    return ans;
+}
+
+Node *reverseLinkedListRec(Node *head)
+{
+    return reverseLL(head).head;
+}
