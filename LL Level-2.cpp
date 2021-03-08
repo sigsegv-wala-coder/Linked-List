@@ -110,33 +110,68 @@ Node *reverseLinkedListRec(Node *head)
    Here is another recursive approach */
 
 // Here we will create a pair class which consists of both head and tail such that
-// we can't traverse the whole linked list to find the tail and then attach head to its next.
+// we don't have to traverse the whole linked list to find the tail and then attach head to its next.
 
-class inter {
-  public : 
+class inter {          // A class named inter (short of intermediate) is created with two properties head and tail Node
+  public :               
     
     Node* head;
     Node* tail;
     
 };
 
-inter reverseLL(Node* head){
-    if(head==NULL || head->next==NULL){
+inter reverseLL(Node* head){                  // Basically we'll create a function reverseLL in which we'll try to update head and tail with constant complexity.
+    if(head==NULL || head->next==NULL){       // Base case is same. But we will create an object named ans in which we'll update head and tail, both with head.
         inter ans;
         ans.head=head;
         ans.tail=head;
         return ans;
     }
-    inter smallAns=reverseLL(head->next);
-    smallAns.tail->next=head;
-    head->next=NULL;
+    inter smallAns=reverseLL(head->next);     // Created object smallans in which we'll pass the remaining linked list and it will return us their head 
+    smallAns.tail->next=head;                 // Connect tail of that linked list with our primary head. 
+    head->next=NULL;                          // Also, put head->next = NULL
     inter ans;
-    ans.head=smallAns.head;
-    ans.tail=head;
+    ans.head=smallAns.head;                  // But there is a need to create another object class (ans) because the head (of smallAns) till previous line is our previous head
+    ans.tail=head;                           // That's why we have to update the head.    
     return ans;
 }
 
+Node *reverseLinkedListRec(Node *head)    // In question we have return type Node*, but we have created a inter class. 
+{                                         // So, we'll first call our reverseLL function and pass the head pointer
+    return reverseLL(head).head;          // then reverseLL.head will give the head Node which we want.
+}
+// Now the complexity is reduced to O(n). But there is a still less complicated way. Let's see.
+
 Node *reverseLinkedListRec(Node *head)
 {
-    return reverseLL(head).head;
+    
+    if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node* smallAns=reverseLinkedListRec(head->next);       // We have to find tail and we were doing all those tantrums to find tail only.
+    Node* tail=head->next;                                 // If we observe closely, then the next element to head is tail.
+    tail->next=head;                                       // Just store the head->next in tail and then tail->next=head and head->next=NULL and we're done.
+    head->next=NULL;
+    return smallAns;
+}
+
+//Iterative approach
+Node *reverseLinkedListRec(Node *head)
+{
+	if(head==NULL || head->next==NULL){
+        return head;
+    }
+    Node* current = head;                 // We'll maintain three nodes. Current will contain the head at first. Previous will contain NULL and next will contain head to next.
+    Node* Next = head->next;              // we will run a loop and update these nodes accordingly. 
+    Node* previous=NULL;
+    while(Next!=NULL){
+        current->next=previous;
+        previous=current;
+        current=Next;
+        Next=Next->next;
+    }
+    current->next=previous;
+    previous=current;
+    current=Next;
+    return previous;
 }
